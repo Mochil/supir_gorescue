@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -42,6 +43,21 @@ public class LoginActivity extends AppCompatActivity {
         Intent intent = new Intent(LoginActivity.this, Main.class);
         startActivity(intent);
         finish();
+    }
+
+    long lastPress;
+    @Override
+    public void onBackPressed() {
+        long currentTime = System.currentTimeMillis();
+        if (currentTime - lastPress > 5000){
+            Toast.makeText(getBaseContext(),"Tekan lagi untuk keluar",Toast.LENGTH_LONG).show();
+            lastPress = currentTime;
+        }else{
+            super.onBackPressed();
+            Log.i(getClass()+"","keluar dari aplikasi");
+            finish();
+            System.exit(0);
+        }
     }
 
 }
